@@ -1,0 +1,15 @@
+{
+  "name": "neonforge-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "contracts",
+    "frontend"
+  ],
+  "scripts": {
+    "contracts:test": "npm --workspace contracts test",
+    "contracts:compile": "npm --workspace contracts compile",
+    "frontend:dev": "npm --workspace frontend dev",
+    "frontend:build": "npm --workspace frontend build"
+  }
+}
