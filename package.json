@@ -11,5 +11,8 @@
     "contracts:compile": "npm --workspace contracts compile",
     "frontend:dev": "npm --workspace frontend dev",
     "frontend:build": "npm --workspace frontend build"
+  },
+  "dependencies": {
+    "three": "^0.185.1"
   }
 }

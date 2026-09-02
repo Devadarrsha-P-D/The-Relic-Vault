@@ -1,4 +1,5 @@
-﻿import { useState, useEffect, useCallback } from "react";
+﻿import Hero3dbackground from "./components/Hero3DBackground";
+import { useState, useEffect, useCallback } from "react";
 import { ethers } from "ethers";
 import { useWeb3 } from "./context/Web3Context";
 import { NEONFORGE_MARKETPLACE_ADDRESS } from "./contracts/addresses";
@@ -186,148 +187,156 @@ function App() {
 
   if (!address) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-6">
-        <h1 className="text-4xl font-bold text-cyan-400 tracking-wider">NEONFORGE</h1>
-        <button
-          onClick={connect}
-          className="px-6 py-3 bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg font-semibold shadow-[0_0_15px_rgba(217,70,239,0.6)] transition"
-        >
-          Connect Wallet
-        </button>
+      <div className="min-h-screen relative flex flex-col items-center justify-center gap-6">
+        <Hero3DBackground />
+        <div className="relative z-10 flex flex-col items-center gap-6">
+          <h1 className="text-4xl font-bold text-cyan-400 tracking-wider">NEONFORGE</h1>
+          <button
+            onClick={connect}
+            className="px-6 py-3 bg-fuchsia-600 hover:bg-fuchsia-500 text-white rounded-lg font-semibold shadow-[0_0_15px_rgba(217,70,239,0.6)] transition"
+          >
+            Connect Wallet
+          </button>
+        </div>
       </div>
     );
   }
 
   if (!isCorrectNetwork) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-6">
-        <h1 className="text-4xl font-bold text-cyan-400 tracking-wider">NEONFORGE</h1>
-        <p className="text-red-400">Wrong network — switch to Sepolia.</p>
-        <button
-          onClick={switchNetwork}
-          className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold shadow-[0_0_15px_rgba(6,182,212,0.6)] transition"
-        >
-          Switch to Sepolia
-        </button>
+      <div className="min-h-screen relative flex flex-col items-center justify-center gap-6">
+        <Hero3DBackground />
+        <div className="relative z-10 flex flex-col items-center gap-6">
+          <h1 className="text-4xl font-bold text-cyan-400 tracking-wider">NEONFORGE</h1>
+          <p className="text-red-400">Wrong network — switch to Sepolia.</p>
+          <button
+            onClick={switchNetwork}
+            className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold shadow-[0_0_15px_rgba(6,182,212,0.6)] transition"
+          >
+            Switch to Sepolia
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <header className="flex justify-between items-center mb-10 border-b border-fuchsia-800/50 pb-4">
-        <h1 className="text-3xl font-bold text-cyan-400 tracking-wider">NEONFORGE</h1>
-        <span className="text-sm text-gray-400 font-mono">
-          {address.slice(0, 6)}...{address.slice(-4)}
-        </span>
-      </header>
+    <div className="min-h-screen relative text-white p-6">
+      <Hero3DBackground />
+      <div className="relative z-10">
+        <header className="flex justify-between items-center mb-10 border-b border-fuchsia-800/50 pb-4">
+          <h1 className="text-3xl font-bold text-cyan-400 tracking-wider">NEONFORGE</h1>
+          <span className="text-sm text-gray-400 font-mono">
+            {address.slice(0, 6)}...{address.slice(-4)}
+          </span>
+        </header>
 
-      {/* Mint section */}
-      <section className="mb-12 bg-gray-900/60 border border-cyan-800/40 rounded-xl p-6">
-        <h2 className="text-xl font-semibold text-fuchsia-400 mb-4">Mint a Card</h2>
-        <div className="flex gap-3">
-          <input
-            type="text"
-            placeholder="Metadata URI (e.g. ipfs://...)"
-            value={mintURI}
-            onChange={(e) => setMintURI(e.target.value)}
-            className="flex-1 bg-black border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-cyan-500"
-          />
-          <button
-            onClick={handleMint}
-            disabled={minting || !mintURI}
-            className="px-5 py-2 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 rounded-lg font-semibold transition"
-          >
-            {minting ? "Minting..." : "Mint"}
-          </button>
-        </div>
-      </section>
-
-      {/* My Cards */}
-      <section className="mb-12">
-        <h2 className="text-xl font-semibold text-fuchsia-400 mb-4">
-          My Cards {loading && <span className="text-sm text-gray-500">(loading...)</span>}
-        </h2>
-        {myCards.length === 0 ? (
-          <p className="text-gray-500">No unlisted cards owned right now.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {myCards.map((card) => (
-              <div
-                key={card.tokenId}
-                className="bg-gray-900/60 border border-gray-700 rounded-xl p-4"
-              >
-                <p className="text-sm text-gray-400 mb-1">Token #{card.tokenId}</p>
-                <p className="text-xs text-gray-500 truncate mb-3">{card.tokenURI}</p>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Price ETH"
-                    value={listPrices[card.tokenId] || ""}
-                    onChange={(e) =>
-                      setListPrices({ ...listPrices, [card.tokenId]: e.target.value })
-                    }
-                    className="flex-1 bg-black border border-gray-700 rounded-lg px-2 py-1 text-sm"
-                  />
-                  <button
-                    onClick={() => handleList(card.tokenId)}
-                    disabled={busyTokenId === card.tokenId}
-                    className="px-3 py-1 bg-fuchsia-600 hover:bg-fuchsia-500 disabled:opacity-40 rounded-lg text-sm font-semibold transition"
-                  >
-                    {busyTokenId === card.tokenId ? "..." : "List"}
-                  </button>
-                </div>
-              </div>
-            ))}
+        {/* Mint section */}
+        <section className="mb-12 bg-gray-900/60 border border-cyan-800/40 rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-fuchsia-400 mb-4">Mint a Card</h2>
+          <div className="flex gap-3">
+            <input
+              type="text"
+              placeholder="Metadata URI (e.g. ipfs://...)"
+              value={mintURI}
+              onChange={(e) => setMintURI(e.target.value)}
+              className="flex-1 bg-black border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-cyan-500"
+            />
+            <button
+              onClick={handleMint}
+              disabled={minting || !mintURI}
+              className="px-5 py-2 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 rounded-lg font-semibold transition"
+            >
+              {minting ? "Minting..." : "Mint"}
+            </button>
           </div>
-        )}
-      </section>
+        </section>
 
-      {/* Marketplace */}
-      <section>
-        <h2 className="text-xl font-semibold text-fuchsia-400 mb-4">Marketplace</h2>
-        {listings.length === 0 ? (
-          <p className="text-gray-500">No active listings.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {listings.map((listing) => {
-              const isMine = listing.seller.toLowerCase() === address.toLowerCase();
-              return (
+        {/* My Cards */}
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold text-fuchsia-400 mb-4">
+            My Cards {loading && <span className="text-sm text-gray-500">(loading...)</span>}
+          </h2>
+          {myCards.length === 0 ? (
+            <p className="text-gray-500">No unlisted cards owned right now.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {myCards.map((card) => (
                 <div
-                  key={listing.tokenId}
-                  className="bg-gray-900/60 border border-cyan-800/40 rounded-xl p-4"
+                  key={card.tokenId}
+                  className="bg-gray-900/60 border border-gray-700 rounded-xl p-4"
                 >
-                  <p className="text-sm text-gray-400 mb-1">Token #{listing.tokenId}</p>
-                  <p className="text-xs text-gray-500 truncate mb-2">{listing.tokenURI}</p>
-                  <p className="text-cyan-400 font-semibold mb-3">
-                    {ethers.formatEther(listing.price)} ETH
-                  </p>
-                  {isMine ? (
+                  <p className="text-sm text-gray-400 mb-1">Token #{card.tokenId}</p>
+                  <p className="text-xs text-gray-500 truncate mb-3">{card.tokenURI}</p>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Price ETH"
+                      value={listPrices[card.tokenId] || ""}
+                      onChange={(e) =>
+                        setListPrices({ ...listPrices, [card.tokenId]: e.target.value })
+                      }
+                      className="flex-1 bg-black border border-gray-700 rounded-lg px-2 py-1 text-sm"
+                    />
                     <button
-                      onClick={() => handleDelist(listing.tokenId)}
-                      disabled={busyTokenId === listing.tokenId}
-                      className="w-full px-3 py-1 bg-gray-700 hover:bg-gray-600 disabled:opacity-40 rounded-lg text-sm font-semibold transition"
+                      onClick={() => handleList(card.tokenId)}
+                      disabled={busyTokenId === card.tokenId}
+                      className="px-3 py-1 bg-fuchsia-600 hover:bg-fuchsia-500 disabled:opacity-40 rounded-lg text-sm font-semibold transition"
                     >
-                      {busyTokenId === listing.tokenId ? "..." : "Delist"}
+                      {busyTokenId === card.tokenId ? "..." : "List"}
                     </button>
-                  ) : (
-                    <button
-                      onClick={() => handleBuy(listing.tokenId, listing.price)}
-                      disabled={busyTokenId === listing.tokenId}
-                      className="w-full px-3 py-1 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 rounded-lg text-sm font-semibold transition"
-                    >
-                      {busyTokenId === listing.tokenId ? "..." : "Buy"}
-                    </button>
-                  )}
+                  </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
-      </section>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* Marketplace */}
+        <section>
+          <h2 className="text-xl font-semibold text-fuchsia-400 mb-4">Marketplace</h2>
+          {listings.length === 0 ? (
+            <p className="text-gray-500">No active listings.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {listings.map((listing) => {
+                const isMine = listing.seller.toLowerCase() === address.toLowerCase();
+                return (
+                  <div
+                    key={listing.tokenId}
+                    className="bg-gray-900/60 border border-cyan-800/40 rounded-xl p-4"
+                  >
+                    <p className="text-sm text-gray-400 mb-1">Token #{listing.tokenId}</p>
+                    <p className="text-xs text-gray-500 truncate mb-2">{listing.tokenURI}</p>
+                    <p className="text-cyan-400 font-semibold mb-3">
+                      {ethers.formatEther(listing.price)} ETH
+                    </p>
+                    {isMine ? (
+                      <button
+                        onClick={() => handleDelist(listing.tokenId)}
+                        disabled={busyTokenId === listing.tokenId}
+                        className="w-full px-3 py-1 bg-gray-700 hover:bg-gray-600 disabled:opacity-40 rounded-lg text-sm font-semibold transition"
+                      >
+                        {busyTokenId === listing.tokenId ? "..." : "Delist"}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleBuy(listing.tokenId, listing.price)}
+                        disabled={busyTokenId === listing.tokenId}
+                        className="w-full px-3 py-1 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 rounded-lg text-sm font-semibold transition"
+                      >
+                        {busyTokenId === listing.tokenId ? "..." : "Buy"}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
 
 export default App;
-
