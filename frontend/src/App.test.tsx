@@ -19,7 +19,7 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-describe('MythForge frontend', () => {
+describe('The Relic Vault frontend', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,

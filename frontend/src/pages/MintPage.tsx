@@ -107,7 +107,7 @@ export function MintPage() {
   const rollCard = () => {
     setForm({
       name: pick(FANTASY_NAMES),
-      description: `A ${form.rarity.toLowerCase()} card forged in the MythForge, channeling the power of ${form.element}.`,
+      description: `A ${form.rarity.toLowerCase()} card forged in The Relic Vault, channeling the power of ${form.element}.`,
       rarity: rollRarity(),
       attack: 22 + Math.floor(Math.random() * 70),
       defense: 18 + Math.floor(Math.random() * 60),
@@ -132,7 +132,7 @@ export function MintPage() {
       return;
     }
 
-    const slug = form.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'mythforge-card';
+    const slug = form.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'relic-vault-card';
     setStage('uploading');
     const toastId = 'mint-progress';
     try {
@@ -149,7 +149,7 @@ export function MintPage() {
       toast.loading('Uploading metadata to IPFS...', { id: toastId });
       const metadata = buildCardMetadata({
         name: form.name.trim(),
-        description: form.description.trim() || `A ${form.rarity.toLowerCase()} card forged in the MythForge.`,
+        description: form.description.trim() || `A ${form.rarity.toLowerCase()} card forged in The Relic Vault.`,
         image: imageUri,
         rarity: form.rarity,
         attack: form.attack,
@@ -199,7 +199,7 @@ export function MintPage() {
           </div>
         ) : isWrongNetwork ? (
           <div className="mt-6 flex flex-col items-start gap-3 rounded-2xl border border-yellow-600/40 bg-yellow-600/10 p-5">
-            <p className="text-sm text-yellow-100">MythForge mints on Sepolia — switch networks to continue.</p>
+            <p className="text-sm text-yellow-100">The Relic Vault mints on Sepolia — switch networks to continue.</p>
             <button
               type="button"
               onClick={switchToSepolia}

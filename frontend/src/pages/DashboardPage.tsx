@@ -196,7 +196,7 @@ export function DashboardPage() {
 
       {isWrongNetwork && (
         <div className="flex flex-col items-center justify-between gap-3 rounded-2xl border border-yellow-600/40 bg-yellow-600/10 px-5 py-4 text-yellow-100 md:flex-row">
-          <p className="text-sm">Wrong network — MythForge lives on Sepolia.</p>
+          <p className="text-sm">Wrong network — The Relic Vault lives on Sepolia.</p>
           <button
             type="button"
             onClick={switchToSepolia}

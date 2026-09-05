@@ -152,7 +152,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       setIsWrongNetwork(nextChainId !== SEPOLIA_CHAIN_ID);
       setCardContract(new ethers.Contract(CARD_CONTRACT_ADDRESS, CARD_ABI, nextSigner));
       setMarketplaceContract(new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, MARKETPLACE_ABI, nextSigner));
-      toast.success('Wallet connected to MythForge.');
+      toast.success('Wallet connected to The Relic Vault.');
     } catch (error) {
       console.error(error);
       toast.error('Unable to connect wallet.');

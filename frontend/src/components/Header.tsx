@@ -13,7 +13,7 @@ export function Header() {
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-amber-400/50 bg-amber-500/10 shadow-ember">
             <Hammer className="h-5 w-5" />
           </span>
-          MythForge
+          The Relic Vault
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

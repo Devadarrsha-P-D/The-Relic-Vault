@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import * as THREE from "three";
 
 /**
- * MythForge — 3D arcane-rune background
+ * The Relic Vault — 3D arcane-rune background
  *
  * Concept: not generic "floating particles" — a sparse field of small
  * wireframe shards (the "rune fragment" fragments) drifting along faint

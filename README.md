@@ -1,15 +1,15 @@
-# MythForge
+# The Relic Vault
 
 **A decentralized marketplace for minting, listing, and trading High Fantasy digital game cards as NFTs on Sepolia.**
 
 <!-- Banner: replace with a real image, e.g. docs/banner.png -->
 <p align="center">
-  <img src="https://placehold.co/1200x400/1a1510/d4a017?text=MythForge+%E2%80%94+Forge.+Trade.+Ascend." alt="MythForge banner: embers and runes over a stone hall, with the MythForge wordmark" width="100%" />
+  <img src="https://placehold.co/1200x400/1a1510/d4a017?text=The+Relic+Vault+%E2%80%94+Forge.+Trade.+Ascend." alt="The Relic Vault banner: embers and runes over a stone hall, with The Relic Vault wordmark" width="100%" />
 </p>
 
 ## 1. Overview
 
-MythForge is an end-to-end demo of an NFT trading-card game on Ethereum's **Sepolia** testnet. Heroes, beasts, artifacts, and spells are minted as unique ERC-721 tokens whose art and attributes live on IPFS, then listed and traded through an on-chain marketplace with atomic ownership + payment transfers.
+The Relic Vault is an end-to-end demo of an NFT trading-card game on Ethereum's **Sepolia** testnet. Heroes, beasts, artifacts, and spells are minted as unique ERC-721 tokens whose art and attributes live on IPFS, then listed and traded through an on-chain marketplace with atomic ownership + payment transfers.
 
 It was built as a club recruitment / portfolio project: everything runs on a testnet with faucet ETH, so anyone can connect a wallet and go from mint to market without spending real money. The codebase is a monorepo — `contracts/` holds the Solidity + Hardhat tooling and `frontend/` holds the Vite + React web app.
 
@@ -70,8 +70,8 @@ The marketplace keeps a 2% protocol fee, routed to a configurable fee recipient.
 ### 1. Clone and install
 
 ```bash
-git clone <your-repo-url> mythforge
-cd mythforge
+git clone <your-repo-url> the-relic-vault
+cd the-relic-vault
 npm install
 ```
 

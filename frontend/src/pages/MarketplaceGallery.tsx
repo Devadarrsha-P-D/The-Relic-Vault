@@ -123,7 +123,7 @@ export function MarketplaceGallery() {
         <Wallet className="h-10 w-10 text-amber-300" />
         <h1 className="font-display text-3xl font-black text-amber-50">The market awaits an adventurer</h1>
         <p className="max-w-md text-stone-300">
-          Connect your wallet to browse the live MythForge marketplace and claim legendary cards.
+          Connect your wallet to browse the live The Relic Vault marketplace and claim legendary cards.
         </p>
         <button
           type="button"
@@ -141,7 +141,7 @@ export function MarketplaceGallery() {
       <section className="rounded-[28px] border border-amber-700/30 bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 p-8 shadow-glow">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-amber-300">MythForge Market</p>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-amber-300">The Relic Vault</p>
             <h1 className="font-display text-4xl font-black tracking-tight text-amber-50 md:text-6xl">Heroes, beasts, and relics of legend.</h1>
           </div>
 
@@ -154,7 +154,7 @@ export function MarketplaceGallery() {
 
       {isWrongNetwork && (
         <div className="flex flex-col items-center justify-between gap-3 rounded-2xl border border-yellow-600/40 bg-yellow-600/10 px-5 py-4 text-yellow-100 md:flex-row">
-          <p className="text-sm">You are on the wrong network — MythForge lives on Sepolia.</p>
+          <p className="text-sm">You are on the wrong network — The Relic Vault lives on Sepolia.</p>
           <button
             type="button"
             onClick={switchToSepolia}

@@ -120,7 +120,7 @@ export function CardDetail() {
       ) : isConnected && notFound ? (
         <div className="myth-frame flex flex-col items-center gap-3 rounded-[28px] px-6 py-20 text-center">
           <p className="font-display text-3xl font-black text-amber-50">This card does not exist</p>
-          <p className="text-stone-300">Token #{tokenNumber} could not be found on the MythForge contracts.</p>
+          <p className="text-stone-300">Token #{tokenNumber} could not be found on The Relic Vault contracts.</p>
         </div>
       ) : (
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">

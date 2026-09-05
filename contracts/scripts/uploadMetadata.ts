@@ -127,7 +127,7 @@ async function main() {
     const imageUri = `ipfs://${svgUpload.ipfsHash}`;
     const metadata = buildMetadataForCard({
       name: card.name,
-      description: `A mythical card from the MythForge archive. ${card.special} channels the power of ${card.element}.`,
+      description: `A mythical card from The Relic Vault archive. ${card.special} channels the power of ${card.element}.`,
       rarity: card.rarity,
       attack: card.attack,
       defense: card.defense,
