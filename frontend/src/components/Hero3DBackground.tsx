@@ -1,13 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import * as THREE from "three";
 
 /**
- * NeonForge — 3D circuit-field background
+ * MythForge — 3D arcane-rune background
  *
  * Concept: not generic "floating particles" — a sparse field of small
- * wireframe shards (the "forged card" fragments) drifting along faint
- * cyan/magenta circuit lines, with a slow parallax tilt on mouse move.
- * Restraint: one bright accent (cyan) carries the motion, magenta only
+ * wireframe shards (the "rune fragment" fragments) drifting along faint
+ * gold/emerald arcane ley lines, with a slow parallax tilt on mouse move.
+ * Restraint: one bright accent (gold) carries the motion, emerald only
  * flickers on a handful of nodes. Everything else stays dim/dark so the
  * foreground UI (your mint/list/buy flow) stays legible on top.
  *
@@ -26,8 +26,8 @@ import * as THREE from "three";
  * for breaking API changes elsewhere in the codebase)
  */
 
-const CYAN = 0x2fe8e0;
-const MAGENTA = 0xff2fd0;
+const GOLD = 0xd4a017;
+const EMERALD = 0x2d6a4f;
 const NODE_COUNT = 90;
 const LINK_DISTANCE = 5.2;
 
@@ -43,7 +43,7 @@ export default function Hero3DBackground() {
 
     // --- scene / camera / renderer ---------------------------------
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x05070a, 0.045);
+    scene.fog = new THREE.FogExp2(0x0f0d09, 0.045);
 
     const camera = new THREE.PerspectiveCamera(55, width / height, 0.1, 100);
     camera.position.set(0, 0, 18);
@@ -64,11 +64,11 @@ export default function Hero3DBackground() {
       const isAccent = Math.random() < 0.12;
       const size = isAccent ? 0.11 : 0.045 + Math.random() * 0.03;
 
-      // sharp-edged geometry — octahedra read as "forged shard", not
+      // sharp-edged geometry — octahedra read as "rune fragment", not
       // the soft spheres every generic three.js background reaches for
       const geo = new THREE.OctahedronGeometry(size, 0);
       const mat = new THREE.MeshBasicMaterial({
-        color: isAccent ? MAGENTA : CYAN,
+        color: isAccent ? EMERALD : GOLD,
         transparent: true,
         opacity: isAccent ? 0.9 : 0.55,
       });
@@ -92,9 +92,9 @@ export default function Hero3DBackground() {
     }
     scene.add(nodeGroup);
 
-    // --- link lines (circuit traces between nearby shards) ---------
+    // --- link lines (arcane ley lines between nearby shards) ---------
     const lineMat = new THREE.LineBasicMaterial({
-      color: CYAN,
+      color: GOLD,
       transparent: true,
       opacity: 0.16,
     });
@@ -213,7 +213,7 @@ export default function Hero3DBackground() {
         zIndex: 0,
         pointerEvents: "none",
         background:
-          "radial-gradient(circle at 50% 30%, #0b0f14 0%, #05070a 70%)",
+          "radial-gradient(circle at 50% 30%, #1a1510 0%, #0f0d09 70%)",
       }}
       aria-hidden="true"
     />

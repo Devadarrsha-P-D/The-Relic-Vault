@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "NeonForgeCard",
-  "sourceName": "contracts/NeonForgeCard.sol",
+  "contractName": "MythForgeCard",
+  "sourceName": "contracts/MythForgeCard.sol",
   "abi": [
     {
       "inputs": [],

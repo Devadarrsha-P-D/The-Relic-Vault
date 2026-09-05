@@ -5,6 +5,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { Header } from './components/Header';
 import { Web3Provider } from './contexts/Web3Context';
 import { MarketplaceGallery } from './pages/MarketplaceGallery';
+import { MintPage } from './pages/MintPage';
 
 const renderWithToaster = (ui: React.ReactElement) => render(<><Toaster />{ui}</>);
 
@@ -18,7 +19,7 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-describe('NeonForge frontend', () => {
+describe('MythForge frontend', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
@@ -101,9 +102,25 @@ describe('NeonForge frontend', () => {
     });
   });
 
-  it('shows a fallback when the marketplace image fails to load', () => {
-    render(<MarketplaceGallery />);
-    const img = screen.getByAltText('Volt Wisp');
-    expect(img).toBeInTheDocument();
+  it('prompts to connect a wallet when viewing the marketplace without one', () => {
+    render(
+      <Web3Provider>
+        <MarketplaceGallery />
+      </Web3Provider>,
+    );
+
+    expect(screen.getByRole('heading', { name: /market awaits an adventurer/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /connect wallet/i })).toBeInTheDocument();
+  });
+
+  it('prompts to connect a wallet on the mint page without one', () => {
+    render(
+      <Web3Provider>
+        <MintPage />
+      </Web3Provider>,
+    );
+
+    expect(screen.getByRole('heading', { name: /forge a new legend/i })).toBeInTheDocument();
+    expect(screen.getByText(/connect your wallet to begin minting/i)).toBeInTheDocument();
   });
 });

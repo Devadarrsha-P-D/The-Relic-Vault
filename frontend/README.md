@@ -1,32 +1,33 @@
-# React + TypeScript + Vite
+# MythForge Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+High fantasy UI for the MythForge NFT marketplace — a Vite + React + TypeScript app styled with Tailwind CSS and the Cinzel / Crimson Text typefaces.
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev        # start the dev server
+npm run build      # typecheck (tsc -b) and production build
+npm test           # run the Vitest suite
+npm run lint       # run Oxlint
+npm run preview    # preview the production build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Structure
+
+- `src/pages/` — Marketplace gallery, mint, card detail, and "My Cards" screens, all wired to the live contracts and IPFS metadata.
+- `src/components/` — `Header` (wallet + nav) and `Hero3DBackground` (3D arcane-rune backdrop).
+- `src/contexts/Web3Context.tsx` — wallet connection, network handling, and contract wiring (MetaMask via `window.ethereum` + ethers v6).
+- `src/contracts/` — deployed MythForge contract ABIs and Sepolia addresses.
+- `src/lib/` — Pinata/IPFS helpers (`pinata.ts`), metadata fetching, and formatting/rarity utilities (`utils.ts`). Mock card data is only used as demo fallback on the card detail page when no wallet is connected.
+
+## Configuration
+
+Contract addresses live in `src/contracts/addresses.ts` and are consumed by `Web3Context`. The app targets the Sepolia testnet — connect a wallet, switch to Sepolia if prompted, and the header will surface the wallet state.
+
+## IPFS uploads (mint page)
+
+Minting uploads card art + JSON metadata to Pinata directly from the browser before calling `mintCard`. Copy `.env.example` to `.env` and set:
+
+- `VITE_PINATA_JWT` — Pinata API key JWT (https://app.pinata.cloud/developers/api-keys). It is bundled into the client, so scope it appropriately.
+- `VITE_PINATA_GATEWAY` — public gateway used to load IPFS content (defaults to `gateway.pinata.cloud`).

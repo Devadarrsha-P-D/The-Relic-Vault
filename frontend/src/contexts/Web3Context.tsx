@@ -2,6 +2,11 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { BrowserProvider, Contract, ethers } from 'ethers';
 import { toast } from 'react-hot-toast';
 import type { ReactNode } from 'react';
+import {
+  MYTHFORGE_CARD_ADDRESS,
+  MYTHFORGE_MARKETPLACE_ADDRESS,
+  SEPOLIA_CHAIN_ID,
+} from '../contracts/addresses';
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
@@ -15,8 +20,8 @@ declare global {
   }
 }
 
-const CARD_CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000';
-const MARKETPLACE_CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000';
+const CARD_CONTRACT_ADDRESS = MYTHFORGE_CARD_ADDRESS;
+const MARKETPLACE_CONTRACT_ADDRESS = MYTHFORGE_MARKETPLACE_ADDRESS;
 
 const CARD_ABI = [
   'function mintCard(address to, string tokenURI) external returns (uint256)',
@@ -25,6 +30,8 @@ const CARD_ABI = [
   'function ownerOf(uint256 tokenId) view returns (address)',
   'function balanceOf(address owner) view returns (uint256)',
   'function approve(address to, uint256 tokenId) external',
+  'function isApprovedForAll(address owner, address operator) view returns (bool)',
+  'function setApprovalForAll(address operator, bool approved) external',
 ];
 
 const MARKETPLACE_ABI = [
@@ -82,7 +89,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         setSigner(accountSigner);
         const nextChainId = Number((await browserProvider.getNetwork()).chainId);
         setChainId(nextChainId);
-        setIsWrongNetwork(nextChainId !== 11155111);
+        setIsWrongNetwork(nextChainId !== SEPOLIA_CHAIN_ID);
         setCardContract(new ethers.Contract(CARD_CONTRACT_ADDRESS, CARD_ABI, accountSigner));
         setMarketplaceContract(new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, MARKETPLACE_ABI, accountSigner));
       }
@@ -101,13 +108,13 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       setSigner(nextSigner);
       const nextChainId = Number((await browserProvider.getNetwork()).chainId);
       setChainId(nextChainId);
-      setIsWrongNetwork(nextChainId !== 11155111);
+      setIsWrongNetwork(nextChainId !== SEPOLIA_CHAIN_ID);
     };
 
     const handleChainChanged = async () => {
       const nextChainId = Number((await browserProvider.getNetwork()).chainId);
       setChainId(nextChainId);
-      setIsWrongNetwork(nextChainId !== 11155111);
+      setIsWrongNetwork(nextChainId !== SEPOLIA_CHAIN_ID);
     };
 
     window.ethereum.on('accountsChanged', handleAccountsChanged);
@@ -142,10 +149,10 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       setSigner(nextSigner);
       setAccount(nextAccount);
       setChainId(nextChainId);
-      setIsWrongNetwork(nextChainId !== 11155111);
+      setIsWrongNetwork(nextChainId !== SEPOLIA_CHAIN_ID);
       setCardContract(new ethers.Contract(CARD_CONTRACT_ADDRESS, CARD_ABI, nextSigner));
       setMarketplaceContract(new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, MARKETPLACE_ABI, nextSigner));
-      toast.success('Wallet connected to NeonForge.');
+      toast.success('Wallet connected to MythForge.');
     } catch (error) {
       console.error(error);
       toast.error('Unable to connect wallet.');
@@ -184,7 +191,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
                 chainId: '0xAA36A7',
                 chainName: 'Sepolia',
                 nativeCurrency: { name: 'Sepolia ETH', symbol: 'ETH', decimals: 18 },
-                rpcUrls: ['https://sepolia.infura.io/v3/'],
+                rpcUrls: ['https://rpc.sepolia.org'],
                 blockExplorerUrls: ['https://sepolia.etherscan.io'],
               },
             ],
