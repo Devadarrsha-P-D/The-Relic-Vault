@@ -1,5 +1,5 @@
 {
-  "name": "neonforge-monorepo",
+  "name": "mythforge-monorepo",
   "private": true,
   "version": "1.0.0",
   "workspaces": [

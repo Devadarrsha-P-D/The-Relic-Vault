@@ -1,6 +1,6 @@
-# NeonForge Contracts
+# MythForge Contracts
 
-This package contains the Solidity smart contracts and Hardhat tooling for the NeonForge NFT marketplace on Sepolia.
+This package contains the Solidity smart contracts and Hardhat tooling for the MythForge NFT marketplace on Sepolia.
 
 ## Features
 

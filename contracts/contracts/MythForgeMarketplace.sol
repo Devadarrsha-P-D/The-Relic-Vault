@@ -5,7 +5,7 @@ import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {ERC721Holder} from "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract NeonForgeMarketplace is ReentrancyGuard, ERC721Holder {
+contract MythForgeMarketplace is ReentrancyGuard, ERC721Holder {
     uint256 public constant MARKETPLACE_FEE_BPS = 200; // 2%
     uint256 public constant MAX_BPS = 10_000;
 

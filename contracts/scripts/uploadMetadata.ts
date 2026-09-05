@@ -6,27 +6,39 @@ dotenv.config();
 const rarityThemes: Record<string, { name: string; accent: string; background: string; image: string }> = {
   Common: {
     name: "Common",
-    accent: "#7dd3fc",
-    background: "#0b1220",
-    image: "https://placehold.co/512x768/0b1220/7dd3fc?text=Common+Spirit",
+    accent: "#a8a29e",
+    background: "#1c1917",
+    image: "https://placehold.co/512x768/1c1917/a8a29e?text=Common+Card",
+  },
+  Uncommon: {
+    name: "Uncommon",
+    accent: "#4ade80",
+    background: "#14532d",
+    image: "https://placehold.co/512x768/14532d/4ade80?text=Uncommon+Card",
   },
   Rare: {
     name: "Rare",
-    accent: "#22d3ee",
-    background: "#082f49",
-    image: "https://placehold.co/512x768/082f49/22d3ee?text=Rare+Spirit",
+    accent: "#60a5fa",
+    background: "#1e3a5f",
+    image: "https://placehold.co/512x768/1e3a5f/60a5fa?text=Rare+Card",
   },
   Epic: {
     name: "Epic",
-    accent: "#d946ef",
-    background: "#2e1065",
-    image: "https://placehold.co/512x768/2e1065/d946ef?text=Epic+Spirit",
+    accent: "#c084fc",
+    background: "#3b0764",
+    image: "https://placehold.co/512x768/3b0764/c084fc?text=Epic+Card",
   },
   Legendary: {
     name: "Legendary",
     accent: "#f59e0b",
-    background: "#3f2a08",
-    image: "https://placehold.co/512x768/3f2a08/f59e0b?text=Legendary+Spirit",
+    background: "#451a03",
+    image: "https://placehold.co/512x768/451a03/f59e0b?text=Legendary+Card",
+  },
+  Mythic: {
+    name: "Mythic",
+    accent: "#ef4444",
+    background: "#450a0a",
+    image: "https://placehold.co/512x768/450a0a/ef4444?text=Mythic+Card",
   },
 };
 
@@ -36,7 +48,7 @@ function buildPlaceholderSvg(theme: { accent: string; background: string; name: 
       <defs>
         <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
           <stop offset="0%" stop-color="${theme.background}"/>
-          <stop offset="100%" stop-color="#050816"/>
+          <stop offset="100%" stop-color="#0f0d09"/>
         </linearGradient>
       </defs>
       <rect width="512" height="768" rx="32" fill="url(#bg)"/>
@@ -44,8 +56,8 @@ function buildPlaceholderSvg(theme: { accent: string; background: string; name: 
       <circle cx="256" cy="220" r="88" fill="none" stroke="${theme.accent}" stroke-width="4" opacity="0.8"/>
       <path d="M178 250 C212 166, 300 166, 334 250 L344 300 C284 332, 228 332, 168 300 Z" fill="${theme.accent}" opacity="0.75"/>
       <path d="M150 520 L256 430 L362 520 L256 620 Z" fill="${theme.accent}" opacity="0.2"/>
-      <text x="256" y="620" text-anchor="middle" font-size="32" font-family="monospace" fill="#E2E8F0" letter-spacing="3">${theme.name.toUpperCase()}</text>
-      <text x="256" y="680" text-anchor="middle" font-size="18" font-family="monospace" fill="#CBD5E1" letter-spacing="2">NEON FORGE</text>
+      <text x="256" y="620" text-anchor="middle" font-size="32" font-family="serif" fill="#E2E8F0" letter-spacing="3">${theme.name.toUpperCase()}</text>
+      <text x="256" y="680" text-anchor="middle" font-size="18" font-family="serif" fill="#CBD5E1" letter-spacing="2">MYTH FORGE</text>
     </svg>
   `;
 }
@@ -94,10 +106,12 @@ async function main() {
   }
 
   const archetypes = [
-    { name: "Volt Wisp", rarity: "Common", attack: 32, defense: 20, special: "Static Bloom", element: "Lightning" },
-    { name: "Glass Marauder", rarity: "Rare", attack: 46, defense: 28, special: "Shard Pulse", element: "Shadow" },
-    { name: "Abyss Bloom", rarity: "Epic", attack: 62, defense: 40, special: "Nova Veil", element: "Void" },
-    { name: "Solar Reaver", rarity: "Legendary", attack: 88, defense: 60, special: "Sunforge Rift", element: "Radiant" },
+    { name: "Ember Drake", rarity: "Common", attack: 32, defense: 20, special: "Breath of Cinders", element: "Fire" },
+    { name: "Shadowblade Rogue", rarity: "Uncommon", attack: 46, defense: 28, special: "Phantom Strike", element: "Shadow" },
+    { name: "Ironbark Sentinel", rarity: "Rare", attack: 55, defense: 48, special: "Living Fortress", element: "Nature" },
+    { name: "Elixir of the Ancients", rarity: "Epic", attack: 62, defense: 40, special: "Timeless Restoration", element: "Arcane" },
+    { name: "Runestone Shield", rarity: "Legendary", attack: 88, defense: 60, special: "Aegis of Ages", element: "Earth" },
+    { name: "Aethon the Undying", rarity: "Mythic", attack: 99, defense: 75, special: "Eternal Resurrection", element: "Divine" },
   ];
 
   const uploadedUris: string[] = [];
@@ -106,14 +120,14 @@ async function main() {
     const svg = buildPlaceholderSvg(rarityThemes[card.rarity]);
     const svgBlob = Buffer.from(svg, "utf8");
     const svgUpload = await pinata.upload.public.file(svgBlob, {
-      filename: `${card.name.toLowerCase().replace(/\s+/g, "-")}.svg`,
+      filename: `${card.name.toLowerCase().replace(/\\s+/g, "-")}.svg`,
       metadata: { keyvalues: { rarity: card.rarity, type: "placeholder-art" } },
     });
 
     const imageUri = `ipfs://${svgUpload.ipfsHash}`;
     const metadata = buildMetadataForCard({
       name: card.name,
-      description: `A neon-coded data-spirit from the NeonForge archive. ${card.special} wields ${card.element} energy.`,
+      description: `A mythical card from the MythForge archive. ${card.special} channels the power of ${card.element}.`,
       rarity: card.rarity,
       attack: card.attack,
       defense: card.defense,
@@ -131,7 +145,7 @@ async function main() {
     console.log(`${card.name}: ${ipfsUri}`);
   }
 
-  console.log("\nGenerated metadata URIs:");
+  console.log("\\nGenerated metadata URIs:");
   console.log(JSON.stringify(uploadedUris, null, 2));
 }
 

@@ -1,16 +1,16 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("NeonForge contracts", function () {
+describe("MythForge contracts", function () {
   async function deployContracts() {
     const [owner, buyer, seller, feeRecipient, otherUser] = await ethers.getSigners();
 
-    const NeonForgeCard = await ethers.getContractFactory("NeonForgeCard");
-    const card = await NeonForgeCard.deploy();
+    const MythForgeCard = await ethers.getContractFactory("MythForgeCard");
+    const card = await MythForgeCard.deploy();
     await card.waitForDeployment();
 
-    const NeonForgeMarketplace = await ethers.getContractFactory("NeonForgeMarketplace");
-    const marketplace = await NeonForgeMarketplace.deploy(await card.getAddress(), feeRecipient.address);
+    const MythForgeMarketplace = await ethers.getContractFactory("MythForgeMarketplace");
+    const marketplace = await MythForgeMarketplace.deploy(await card.getAddress(), feeRecipient.address);
     await marketplace.waitForDeployment();
 
     return { owner, buyer, seller, feeRecipient, otherUser, card, marketplace };
@@ -154,5 +154,29 @@ describe("NeonForge contracts", function () {
     await marketplace.connect(buyer).purchaseCard(0, { value: listingPrice });
 
     await expect(marketplace.delistCard(0)).to.be.revertedWith("Marketplace: listing is not active");
+  });
+
+  it("reverts when buying a token that was never listed", async function () {
+    const { owner, buyer, card, marketplace } = await deployContracts();
+    const listingPrice = ethers.parseEther("1.0");
+
+    await card.mintCard(owner.address, "ipfs://unlisted-card");
+
+    await expect(marketplace.connect(buyer).purchaseCard(0, { value: listingPrice })).to.be.revertedWith(
+      "Marketplace: listing is not active",
+    );
+  });
+
+  it("reverts when a non-owner tries to update the price", async function () {
+    const { owner, buyer, card, marketplace } = await deployContracts();
+    const listingPrice = ethers.parseEther("1.0");
+
+    await card.mintCard(owner.address, "ipfs://price-card");
+    await card.approve(await marketplace.getAddress(), 0);
+    await marketplace.listCard(0, listingPrice);
+
+    await expect(marketplace.connect(buyer).updatePrice(0, ethers.parseEther("2.0"))).to.be.revertedWith(
+      "Marketplace: caller is not seller",
+    );
   });
 });
