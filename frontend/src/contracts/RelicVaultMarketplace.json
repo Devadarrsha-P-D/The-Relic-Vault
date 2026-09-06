@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "MythForgeMarketplace",
-  "sourceName": "contracts/MythForgeMarketplace.sol",
+  "contractName": "RelicVaultMarketplace",
+  "sourceName": "contracts/RelicVaultMarketplace.sol",
   "abi": [
     {
       "inputs": [

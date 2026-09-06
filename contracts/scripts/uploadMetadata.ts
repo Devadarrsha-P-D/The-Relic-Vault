@@ -57,7 +57,7 @@ function buildPlaceholderSvg(theme: { accent: string; background: string; name: 
       <path d="M178 250 C212 166, 300 166, 334 250 L344 300 C284 332, 228 332, 168 300 Z" fill="${theme.accent}" opacity="0.75"/>
       <path d="M150 520 L256 430 L362 520 L256 620 Z" fill="${theme.accent}" opacity="0.2"/>
       <text x="256" y="620" text-anchor="middle" font-size="32" font-family="serif" fill="#E2E8F0" letter-spacing="3">${theme.name.toUpperCase()}</text>
-      <text x="256" y="680" text-anchor="middle" font-size="18" font-family="serif" fill="#CBD5E1" letter-spacing="2">MYTH FORGE</text>
+      <text x="256" y="680" text-anchor="middle" font-size="18" font-family="serif" fill="#CBD5E1" letter-spacing="2">THE RELIC VAULT</text>
     </svg>
   `;
 }

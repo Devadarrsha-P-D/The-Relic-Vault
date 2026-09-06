@@ -4,7 +4,7 @@
 
 <!-- Banner: replace with a real image, e.g. docs/banner.png -->
 <p align="center">
-  <img src="https://placehold.co/1200x400/1a1510/d4a017?text=The+Relic+Vault+%E2%80%94+Forge.+Trade.+Ascend." alt="The Relic Vault banner: embers and runes over a stone hall, with The Relic Vault wordmark" width="100%" />
+  <img src="""C:\Users\VISHAL KHUMAR P D\Pictures\Screenshots\Screenshot 2026-09-05 222244.png""" alt="The Relic Vault banner: embers and runes over a stone hall, with The Relic Vault wordmark" width="100%" />
 </p>
 
 ## 1. Overview
@@ -42,19 +42,19 @@ The marketplace keeps a 2% protocol fee, routed to a configurable fee recipient.
 <!-- Replace the placeholders below with real captures in docs/screenshots/ -->
 
 <p align="center">
-  <img src="https://placehold.co/1100x620/1a1510/d4a017?text=Marketplace+Gallery" alt="Marketplace gallery view: a grid of ornate High Fantasy cards with rarity badges and Buy buttons" width="90%" />
+  <img src="" alt="Marketplace gallery view: a grid of ornate High Fantasy cards with rarity badges and Buy buttons" width="90%" />
   <br />
   <em>Marketplace gallery — live listings from the contracts, each card showing art, rarity, price, and a Buy action.</em>
 </p>
 
 <p align="center">
-  <img src="https://placehold.co/1100x620/1a1510/d4a017?text=Mint+Flow" alt="Mint flow: card creation form with name, description, image upload, rarity and stat inputs beside a live card preview" width="90%" />
+  <img src="" alt="Mint flow: card creation form with name, description, image upload, rarity and stat inputs beside a live card preview" width="90%" />
   <br />
   <em>Mint flow — fill in the card, upload or auto-generate art, and the page uploads to IPFS before minting.</em>
 </p>
 
 <p align="center">
-  <img src="https://placehold.co/1100x620/1a1510/d4a017?text=My+Cards" alt="My Cards page: the connected wallet's collection with List and Delist actions and price inputs" width="90%" />
+  <img src="" alt="My Cards page: the connected wallet's collection with List and Delist actions and price inputs" width="90%" />
   <br />
   <em>My Cards — the wallet's collection with List-for-sale and Delist controls.</em>
 </p>
@@ -108,7 +108,7 @@ npm run contracts:compile
 npm --workspace contracts run deploy:sepolia   # = cd contracts && npx hardhat run scripts/deploy.ts --network sepolia
 ```
 
-The deploy script prints the `MythForgeCard` and `MythForgeMarketplace` addresses. Optionally verify them on Etherscan:
+The deploy script prints the `RelicVaultCard` and `RelicVaultMarketplace` addresses. Optionally verify them on Etherscan:
 
 ```bash
 cd contracts
@@ -183,8 +183,8 @@ After running the deploy script, record the addresses below and paste them into 
 
 | Contract | Address |
 |---|---|
-| MythForgeCard (ERC-721, name `MythForge Cards`, symbol `MYTH`) | `<CARD_ADDRESS>` |
-| MythForgeMarketplace | `<MARKETPLACE_ADDRESS>` |
+| RelicVaultCard (ERC-721, name `The Relic Vault`, symbol `RELIC`) | `<CARD_ADDRESS>` |
+| RelicVaultMarketplace | `<MARKETPLACE_ADDRESS>` |
 
 Explorer links follow the standard format:
 

@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "MythForgeCard",
-  "sourceName": "contracts/MythForgeCard.sol",
+  "contractName": "RelicVaultCard",
+  "sourceName": "contracts/RelicVaultCard.sol",
   "abi": [
     {
       "inputs": [],

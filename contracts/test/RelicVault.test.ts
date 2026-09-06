@@ -1,16 +1,16 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("MythForge contracts", function () {
+describe("Relic Vault contracts", function () {
   async function deployContracts() {
     const [owner, buyer, seller, feeRecipient, otherUser] = await ethers.getSigners();
 
-    const MythForgeCard = await ethers.getContractFactory("MythForgeCard");
-    const card = await MythForgeCard.deploy();
+    const RelicVaultCard = await ethers.getContractFactory("RelicVaultCard");
+    const card = await RelicVaultCard.deploy();
     await card.waitForDeployment();
 
-    const MythForgeMarketplace = await ethers.getContractFactory("MythForgeMarketplace");
-    const marketplace = await MythForgeMarketplace.deploy(await card.getAddress(), feeRecipient.address);
+    const RelicVaultMarketplace = await ethers.getContractFactory("RelicVaultMarketplace");
+    const marketplace = await RelicVaultMarketplace.deploy(await card.getAddress(), feeRecipient.address);
     await marketplace.waitForDeployment();
 
     return { owner, buyer, seller, feeRecipient, otherUser, card, marketplace };

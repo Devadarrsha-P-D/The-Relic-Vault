@@ -3,8 +3,8 @@ import { BrowserProvider, Contract, ethers } from 'ethers';
 import { toast } from 'react-hot-toast';
 import type { ReactNode } from 'react';
 import {
-  MYTHFORGE_CARD_ADDRESS,
-  MYTHFORGE_MARKETPLACE_ADDRESS,
+  RELIC_VAULT_CARD_ADDRESS,
+  RELIC_VAULT_MARKETPLACE_ADDRESS,
   SEPOLIA_CHAIN_ID,
 } from '../contracts/addresses';
 
@@ -20,10 +20,10 @@ declare global {
   }
 }
 
-const CARD_CONTRACT_ADDRESS = MYTHFORGE_CARD_ADDRESS;
-const MARKETPLACE_CONTRACT_ADDRESS = MYTHFORGE_MARKETPLACE_ADDRESS;
+const CARD_CONTRACT_ADDRESS = RELIC_VAULT_CARD_ADDRESS;
+const MARKETPLACE_CONTRACT_ADDRESS = RELIC_VAULT_MARKETPLACE_ADDRESS;
 
-const CARD_ABI = [
+export const CARD_ABI = [
   'function mintCard(address to, string tokenURI) external returns (uint256)',
   'function totalSupply() view returns (uint256)',
   'function tokenURI(uint256 tokenId) view returns (string)',
@@ -32,15 +32,18 @@ const CARD_ABI = [
   'function approve(address to, uint256 tokenId) external',
   'function isApprovedForAll(address owner, address operator) view returns (bool)',
   'function setApprovalForAll(address operator, bool approved) external',
+  'event CardMinted(address indexed to, uint256 indexed tokenId, string tokenURI)',
 ];
 
-const MARKETPLACE_ABI = [
+export const MARKETPLACE_ABI = [
   'function listCard(uint256 tokenId, uint256 price) external',
   'function delistCard(uint256 tokenId) external',
   'function updatePrice(uint256 tokenId, uint256 newPrice) external',
   'function purchaseCard(uint256 tokenId) payable',
   'function getListing(uint256 tokenId) view returns (tuple(address seller, uint256 price, bool active))',
   'function feeRecipient() view returns (address)',
+  'event CardListed(address indexed seller, uint256 indexed tokenId, uint256 price)',
+  'event CardPurchased(address indexed buyer, address indexed seller, uint256 indexed tokenId, uint256 price, uint256 fee)',
 ];
 
 type Web3ContextType = {
@@ -191,7 +194,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
                 chainId: '0xAA36A7',
                 chainName: 'Sepolia',
                 nativeCurrency: { name: 'Sepolia ETH', symbol: 'ETH', decimals: 18 },
-                rpcUrls: ['https://rpc.sepolia.org'],
+                rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
                 blockExplorerUrls: ['https://sepolia.etherscan.io'],
               },
             ],

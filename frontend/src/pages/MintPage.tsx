@@ -9,7 +9,8 @@ import {
   uploadFileToIpfs,
   uploadJsonToIpfs,
 } from '../lib/pinata';
-import { getExplorerTxUrl, getTxErrorMessage, rarityStyles } from '../lib/utils';
+import { getExplorerTxUrl, getTxErrorMessage, ipfsToHttp, rarityStyles } from '../lib/utils';
+import { CardRevealOverlay, type RevealCard } from '../components/CardRevealOverlay';
 
 const RARITY_ORDER = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Mythic'];
 
@@ -90,6 +91,7 @@ export function MintPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [stage, setStage] = useState<'idle' | 'uploading' | 'minting'>('idle');
   const [error, setError] = useState<string | null>(null);
+  const [mintedCard, setMintedCard] = useState<RevealCard | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const setField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
@@ -165,6 +167,15 @@ export function MintPage() {
       await tx.wait();
 
       toast.success(`${form.name.trim()} minted! View on Etherscan: ${getExplorerTxUrl(tx.hash)}`, { id: toastId, duration: 10000 });
+      setMintedCard({
+        name: form.name.trim(),
+        rarity: form.rarity,
+        image: ipfsToHttp(imageUri),
+        element: form.element,
+        attack: form.attack,
+        defense: form.defense,
+        special: form.special.trim() || 'No special ability',
+      });
       setForm(EMPTY_FORM);
       setImageFile(null);
       setImagePreview(null);
@@ -394,6 +405,8 @@ export function MintPage() {
           </div>
         </div>
       </div>
+
+      {mintedCard && <CardRevealOverlay card={mintedCard} onClose={() => setMintedCard(null)} />}
     </div>
   );
 }

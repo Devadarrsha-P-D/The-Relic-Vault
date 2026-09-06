@@ -3,17 +3,17 @@ pragma solidity ^0.8.24;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract MythForgeCard is ERC721 {
+contract RelicVaultCard is ERC721 {
     uint256 private _tokenIdCounter;
 
     event CardMinted(address indexed to, uint256 indexed tokenId, string tokenURI);
 
     mapping(uint256 => string) private _tokenURIs;
 
-    constructor() ERC721("MythForge Cards", "MYTH") {}
+    constructor() ERC721("The Relic Vault", "RELIC") {}
 
     function mintCard(address to, string memory metadataURI) external returns (uint256) {
-        require(to != address(0), "MythForgeCard: cannot mint to zero address");
+        require(to != address(0), "RelicVaultCard: cannot mint to zero address");
 
         uint256 tokenId = _tokenIdCounter;
         _tokenIdCounter += 1;

@@ -91,3 +91,149 @@ img {
   background: linear-gradient(180deg, rgba(212,160,23,0.8), rgba(45,106,79,0.8));
   border-radius: 9999px;
 }
+
+/* ---------- Card mint reveal overlay ---------- */
+
+/* Full-screen backdrop fade-in */
+.relic-reveal-backdrop {
+  animation: relic-backdrop-in 0.45s ease-out both;
+}
+
+@keyframes relic-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Anticipation: pulsing relic orb with expanding rings */
+.relic-reveal-orb {
+  animation: relic-orb-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes relic-orb-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+.relic-reveal-ring {
+  animation: relic-ring-expand 1.5s ease-out infinite;
+}
+
+@keyframes relic-ring-expand {
+  0% { transform: scale(0.5); opacity: 0.9; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+
+/* Bright flash when the card bursts out (translate baked in so the
+   animation's transform doesn't fight the centering) */
+.relic-reveal-flash {
+  animation: relic-flash 0.9s ease-out both;
+}
+
+@keyframes relic-flash {
+  0% { transform: translate(-50%, -50%) scale(0.35); opacity: 0.85; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+/* Rarity-colored particle burst radiating from the center */
+.relic-burst-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 9999px;
+  background: var(--color);
+  box-shadow: 0 0 12px var(--color);
+  opacity: 0;
+  animation: relic-particle-burst 1s ease-out var(--delay) both;
+}
+
+@keyframes relic-particle-burst {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.1); opacity: 0; }
+}
+
+/* Card zoom-in with an overshoot "landing" settle */
+.relic-reveal-card {
+  animation: relic-card-reveal 1s ease-out both;
+}
+
+@keyframes relic-card-reveal {
+  0% { transform: scale(0.5); opacity: 0; filter: blur(10px); }
+  50% { transform: scale(1.1); opacity: 1; filter: blur(0); }
+  68% { transform: scale(0.97); }
+  82% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* Persistent rarity glow breathing behind the card */
+.relic-reveal-glow {
+  animation: relic-glow-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes relic-glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.07); }
+}
+
+/* Ground shadow that pops in as the card lands */
+.relic-reveal-shadow {
+  animation: relic-shadow-in 0.45s ease-out 0.55s both;
+}
+
+@keyframes relic-shadow-in {
+  0% { transform: translateX(-50%) scaleX(0.35); opacity: 0; }
+  100% { transform: translateX(-50%) scaleX(1); opacity: 1; }
+}
+
+/* Slow ambient embers drifting upward */
+.relic-ember {
+  position: absolute;
+  border-radius: 9999px;
+  background: var(--color);
+  box-shadow: 0 0 8px var(--color);
+  opacity: 0;
+  animation: relic-ember-rise 3.4s linear var(--delay) infinite;
+}
+
+@keyframes relic-ember-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  12% { opacity: 0.85; }
+  100% { transform: translateY(-46vh) scale(0.35); opacity: 0; }
+}
+
+/* Captions / buttons fade in after the reveal */
+.relic-reveal-caption {
+  animation: relic-caption-in 0.6s ease-out 0.8s both;
+}
+
+@keyframes relic-caption-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dismissal fade-out for the whole overlay */
+.relic-reveal-closing {
+  animation: relic-fade-out 0.3s ease-in both;
+}
+
+@keyframes relic-fade-out {
+  to { opacity: 0; transform: scale(0.96); }
+}
+
+/* Respect reduced-motion preferences: collapse the choreography to an instant */
+@media (prefers-reduced-motion: reduce) {
+  .relic-reveal-orb,
+  .relic-reveal-ring,
+  .relic-reveal-flash,
+  .relic-burst-particle,
+  .relic-reveal-card,
+  .relic-reveal-glow,
+  .relic-reveal-shadow,
+  .relic-ember,
+  .relic-reveal-caption {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}

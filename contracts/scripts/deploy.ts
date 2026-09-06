@@ -22,20 +22,20 @@ async function main() {
   const feeRecipient = process.env.FEE_RECIPIENT || deployer.address;
   console.log("Deploying contracts with account:", deployer.address);
 
-  const MythForgeCard = await ethers.getContractFactory("MythForgeCard");
-  const card = await MythForgeCard.deploy();
+  const RelicVaultCard = await ethers.getContractFactory("RelicVaultCard");
+  const card = await RelicVaultCard.deploy();
   const cardTx = card.deploymentTransaction();
-  console.log("MythForgeCard TX hash:", cardTx?.hash);
-  const cardReceipt = await waitForReceipt(provider, cardTx!.hash, "MythForgeCard");
+  console.log("RelicVaultCard TX hash:", cardTx?.hash);
+  const cardReceipt = await waitForReceipt(provider, cardTx!.hash, "RelicVaultCard");
   const cardAddress = cardReceipt.contractAddress;
-  console.log("MythForgeCard deployed to:", cardAddress);
+  console.log("RelicVaultCard deployed to:", cardAddress);
 
-  const MythForgeMarketplace = await ethers.getContractFactory("MythForgeMarketplace");
-  const marketplace = await MythForgeMarketplace.deploy(cardAddress, feeRecipient);
+  const RelicVaultMarketplace = await ethers.getContractFactory("RelicVaultMarketplace");
+  const marketplace = await RelicVaultMarketplace.deploy(cardAddress, feeRecipient);
   const marketTx = marketplace.deploymentTransaction();
-  console.log("MythForgeMarketplace TX hash:", marketTx?.hash);
-  const marketReceipt = await waitForReceipt(provider, marketTx!.hash, "MythForgeMarketplace");
-  console.log("MythForgeMarketplace deployed to:", marketReceipt.contractAddress);
+  console.log("RelicVaultMarketplace TX hash:", marketTx?.hash);
+  const marketReceipt = await waitForReceipt(provider, marketTx!.hash, "RelicVaultMarketplace");
+  console.log("RelicVaultMarketplace deployed to:", marketReceipt.contractAddress);
 
   console.log("Fee recipient:", feeRecipient);
 }
