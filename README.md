@@ -24,7 +24,42 @@ It was built as a club recruitment / portfolio project: everything runs on a tes
 
 The marketplace keeps a 2% protocol fee, routed to a configurable fee recipient.
 
-## 3. Tech Stack
+## IPFS Implementation
+
+### What is stored on IPFS
+
+Every card in The Relic Vault has two things pinned to IPFS before it can be minted or listed:
+
+- **Card art** — an SVG (uploaded by the user or auto-generated placeholder art) is pinned as a file and returned as an `ipfs://<cid>` URI.
+- **Card metadata (JSON)** — a JSON document containing the card's name, description, rarity, stats (attack / defense / special / element), and a reference to the on-IPFS image is pinned separately and returned as its own `ipfs://<cid>` URI.
+
+The art and metadata are pinned independently, so each card's final `tokenURI` points at the metadata JSON, and that JSON in turn points at the art image — the standard ERC-721 / metadata pattern.
+
+### Which IPFS service and gateway
+
+The project uses **Pinata** for pinning:
+
+- **Uploads** — the `uploadMetadata.ts` seed script and the in-app mint flow both use the Pinata SDK (`@pinata/sdk` on the contract side; Pinata's HTTP pinning API called from the frontend via `src/lib/pinata.ts`) to pin files (`pinFileToIPFS`) and JSON (`pinJSONToIPFS`).
+- **Gateway** — Pinata's public gateway (`gateway.pinata.cloud`) is used to resolve `ipfs://<cid>` URIs into ordinary HTTPS URLs the browser can `fetch()`. The gateway is configurable via `VITE_PINATA_GATEWAY` in `frontend/.env`, defaulting to `gateway.pinata.cloud` in `frontend/src/lib/utils.ts`.
+
+### URI / CID format used
+
+All IPFS references use the `ipfs://<cid>` scheme. For example:
+
+```
+ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbz6y
+```
+
+- On mint, the card contract stores that `ipfs://<cid>` string as the card's `tokenURI`.
+- At display time, the frontend converts it to `https://<gateway>/ipfs/<cid>` before fetching the metadata JSON and the card image.
+
+The seed-metadata script (`contracts/scripts/uploadMetadata.ts`) exercises the full flow: it pins placeholder SVG art and a matching metadata JSON for each archetype card, then prints the `ipfs://<cid>` URIs to stdout so they can be used during development.
+
+### Security note
+
+The Pinata JWT is required in `frontend/.env` (`VITE_PINATA_JWT`) because in-app card uploads happen from the browser. Since that JWT ends up in the client bundle, a narrow-scoped JWT should be used (see Pinata's API keys page).
+
+## 4. Tech Stack
 
 | Layer | Choice |
 |---|---|
@@ -37,27 +72,24 @@ The marketplace keeps a 2% protocol fee, routed to a configurable fee recipient.
 | Testing | Hardhat + Mocha/Chai, Vitest + Testing Library |
 | 3D background | three.js |
 
-## 4. Screenshots
+## Screenshots
 
-<!-- Replace the placeholders below with real captures in docs/screenshots/ -->
+### Marketplace
+![Marketplace screenshot](./screenshots/marketplace.png)
 
-<p align="center">
-  <img src="" alt="Marketplace gallery view: a grid of ornate High Fantasy cards with rarity badges and Buy buttons" width="90%" />
-  <br />
-  <em>Marketplace gallery — live listings from the contracts, each card showing art, rarity, price, and a Buy action.</em>
-</p>
+### Mint page
+![Mint page screenshot](./screenshots/mint.png)
+![mint-card2 screenshot](./screenshots/mint-card2.png)
 
-<p align="center">
-  <img src="" alt="Mint flow: card creation form with name, description, image upload, rarity and stat inputs beside a live card preview" width="90%" />
-  <br />
-  <em>Mint flow — fill in the card, upload or auto-generate art, and the page uploads to IPFS before minting.</em>
-</p>
+### My Cards
+![My Cards screenshot](./screenshots/my-cards.png)
+###
+![new-card screenshot](./screenshots/new-card.png)
 
-<p align="center">
-  <img src="" alt="My Cards page: the connected wallet's collection with List and Delist actions and price inputs" width="90%" />
-  <br />
-  <em>My Cards — the wallet's collection with List-for-sale and Delist controls.</em>
-</p>
+### Profile
+![Profile screenshot](./screenshots/profile.png)
+
+
 
 ## 5. Getting Started
 
