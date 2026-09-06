@@ -235,8 +235,16 @@ Contributions are welcome — this is a demo project, so small, focused improvem
    ```
 4. Open a pull request describing what changed and why.
 
+## 11. Deployed link
+
+Live hosted app: [https://the-relic-vault.vercel.app/](https://the-relic-vault.vercel.app/)
+
+Connect a Web3 wallet (MetaMask), switch to Sepolia, and you can mint, list, and trade cards directly from the deployed frontend. Contract deployments are kept up to date with the addresses in `frontend/src/contracts/addresses.ts` — if the app ever shows a "contract not found" state, check that file against the latest Sepolia deployment.
+
+
 ## 10. License & Credits
 
 **License:** No license has been chosen yet — the project is intended for demonstration and recruitment purposes. Please ask the maintainers before reusing the code elsewhere.
 
 **Credits:** Built on Hardhat and OpenZeppelin Contracts v5 (ERC-721), ethers.js, React + Vite + Tailwind CSS, Pinata for IPFS pinning, three.js for the arcane background, and the Sepolia testnet. This project exists thanks to the free tools and faucets of the Ethereum testnet ecosystem.
+
