@@ -2,10 +2,8 @@
 
 **A decentralized marketplace for minting, listing, and trading High Fantasy digital game cards as NFTs on Sepolia.**
 
-<!-- Banner: replace with a real image, e.g. docs/banner.png -->
-<p align="center">
-  <img src="""C:\Users\VISHAL KHUMAR P D\Pictures\Screenshots\Screenshot 2026-09-05 222244.png""" alt="The Relic Vault banner: embers and runes over a stone hall, with The Relic Vault wordmark" width="100%" />
-</p>
+### The Relic Vault
+![Marketplace screenshot](./screenshots/marketplace.png)
 
 ## 1. Overview
 
@@ -76,16 +74,14 @@ The Pinata JWT is required in `frontend/.env` (`VITE_PINATA_JWT`) because in-app
 
 ### Marketplace
 ![Marketplace screenshot](./screenshots/marketplace.png)
-
 ### Mint page
 ![Mint page screenshot](./screenshots/mint.png)
+### Minting card
 ![mint-card2 screenshot](./screenshots/mint-card2.png)
-
+### Unlock card
+![new-card screenshot](./screenshots/new-card.png)
 ### My Cards
 ![My Cards screenshot](./screenshots/my-cards.png)
-###
-![new-card screenshot](./screenshots/new-card.png)
-
 ### Profile
 ![Profile screenshot](./screenshots/profile.png)
 
