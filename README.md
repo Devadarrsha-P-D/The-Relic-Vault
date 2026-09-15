@@ -9,7 +9,7 @@
 
 The Relic Vault is an end-to-end demo of an NFT trading-card game on Ethereum's **Sepolia** testnet. Heroes, beasts, artifacts, and spells are minted as unique ERC-721 tokens whose art and attributes live on IPFS, then listed and traded through an on-chain marketplace with atomic ownership + payment transfers.
 
-It was built as a club recruitment / portfolio project: everything runs on a testnet with faucet ETH, so anyone can connect a wallet and go from mint to market without spending real money. The codebase is a monorepo — `contracts/` holds the Solidity + Hardhat tooling and `frontend/` holds the Vite + React web app.
+This project runs on a testnet with faucet ETH, so anyone can connect a wallet and go from mint to market without spending real money. The codebase is a monorepo — `contracts/` holds the Solidity + Hardhat tooling and `frontend/` holds the Vite + React web app.
 
 ## 2. Features
 
