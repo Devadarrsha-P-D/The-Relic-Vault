@@ -2,16 +2,22 @@
 
 **A decentralized marketplace for minting, listing, and trading High Fantasy digital game cards as NFTs on Sepolia.**
 
+## Deployed link
+
+Live hosted app: [https://the-relic-vault.vercel.app/](https://the-relic-vault.vercel.app/)
+
+Connect a Web3 wallet (MetaMask), switch to Sepolia, and you can mint, list, and trade cards directly from the deployed frontend. Contract deployments are kept up to date with the addresses in `frontend/src/contracts/addresses.ts` — if the app ever shows a "contract not found" state, check that file against the latest Sepolia deployment.
+
 ### The Relic Vault
 ![Marketplace screenshot](./screenshots/marketplace.png)
 
-## 1. Overview
+## Overview
 
 The Relic Vault is an end-to-end demo of an NFT trading-card game on Ethereum's **Sepolia** testnet. Heroes, beasts, artifacts, and spells are minted as unique ERC-721 tokens whose art and attributes live on IPFS, then listed and traded through an on-chain marketplace with atomic ownership + payment transfers.
 
 This project runs on a testnet with faucet ETH, so anyone can connect a wallet and go from mint to market without spending real money. The codebase is a monorepo — `contracts/` holds the Solidity + Hardhat tooling and `frontend/` holds the Vite + React web app.
 
-## 2. Features
+## Features
 
 - **Unique card minting** — every card gets a sequential, unique token ID and its own on-chain `tokenURI`.
 - **IPFS-stored metadata** — card art and JSON metadata (name, description, rarity, stats) are pinned to IPFS via Pinata before minting.
@@ -57,7 +63,7 @@ The seed-metadata script (`contracts/scripts/uploadMetadata.ts`) exercises the f
 
 The Pinata JWT is required in `frontend/.env` (`VITE_PINATA_JWT`) because in-app card uploads happen from the browser. Since that JWT ends up in the client bundle, a narrow-scoped JWT should be used (see Pinata's API keys page).
 
-## 4. Tech Stack
+## Tech Stack
 
 | Layer | Choice |
 |---|---|
@@ -87,7 +93,7 @@ The Pinata JWT is required in `frontend/.env` (`VITE_PINATA_JWT`) because in-app
 
 
 
-## 5. Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -154,7 +160,7 @@ npm run frontend:dev              # = cd frontend && npm run dev
 
 Open the printed URL (default http://localhost:5173), connect your wallet, switch to Sepolia when prompted, and start minting.
 
-### Uploading seed metadata (optional)
+### 5. Uploading seed metadata (optional)
 
 `contracts/scripts/uploadMetadata.ts` pins a set of archetype card SVGs + JSON to Pinata and prints IPFS-ready URIs:
 
@@ -192,7 +198,7 @@ Production build / typecheck of the frontend:
 npm run frontend:build            # tsc -b && vite build
 ```
 
-## 7. Rarity Tiers
+## Rarity Tiers
 
 | Tier | Frame | Flavor |
 |---|---|---|
@@ -205,7 +211,7 @@ npm run frontend:build            # tsc -b && vite build
 
 Rarity lives in each card's on-chain metadata (`attributes[].trait_type = "Rarity"`) and drives the frame and badge treatment in the UI.
 
-## 8. Contract Addresses (Sepolia)
+## Contract Addresses (Sepolia)
 
 After running the deploy script, record the addresses below and paste them into `frontend/src/contracts/addresses.ts`:
 
@@ -222,7 +228,7 @@ https://sepolia.etherscan.io/address/<CONTRACT_ADDRESS>
 
 Example: `https://sepolia.etherscan.io/address/0x7146F59993E86BfAEFDe4C175051F325ADAAD26a`
 
-## 9. Contributing
+## Contributing
 
 Contributions are welcome — this is a demo project, so small, focused improvements land best.
 
@@ -235,14 +241,8 @@ Contributions are welcome — this is a demo project, so small, focused improvem
    ```
 4. Open a pull request describing what changed and why.
 
-## 11. Deployed link
 
-Live hosted app: [https://the-relic-vault.vercel.app/](https://the-relic-vault.vercel.app/)
-
-Connect a Web3 wallet (MetaMask), switch to Sepolia, and you can mint, list, and trade cards directly from the deployed frontend. Contract deployments are kept up to date with the addresses in `frontend/src/contracts/addresses.ts` — if the app ever shows a "contract not found" state, check that file against the latest Sepolia deployment.
-
-
-## 10. License & Credits
+## License & Credits
 
 **License:** No license has been chosen yet — the project is intended for demonstration and recruitment purposes. Please ask the maintainers before reusing the code elsewhere.
 
